@@ -1,0 +1,8 @@
+# CLI
+Click==7.0
+
+# Tabulate
+Tabulate==0.8.2
+
+# Mac Address
+netaddr==0.7.19
