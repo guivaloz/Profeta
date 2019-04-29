@@ -19,7 +19,7 @@ class EquiposNetwork(Equipos):
         contenido.append("DHCP=no")
         contenido.append("")
         contenido.append("[Address]")
-        contenido.append("Address={0}.{1}.1/24".format(self.IP_ADDRESS_PREFIX, self.vlan))
+        contenido.append("Address={0}.{1}.{2}/24".format(self.IP_ADDRESS_PREFIX, self.vlan, self.IP_ADDRESS_PROFETA_N))
         contenido.append("")
         contenido.append("")
         return('\n'.join(contenido))

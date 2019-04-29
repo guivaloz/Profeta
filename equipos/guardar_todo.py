@@ -11,7 +11,9 @@ class GuardarTodo(object):
     """ Guardar todo """
 
     NETWORK_DEVICE = 'enp1s0'
-    VLANS = ['11', '12', '13', '14', '15', '16', '17']
+    IP_ADDRESS_PREFIX = '192.168'
+    IP_ADDRESS_PROFETA_N = '254'
+    VLANS = ['11', '12', '13', '14', '15', '16', '17', '18']
     DNSMASQCONF_DIR = 'var/lib/dnsmasq'
     NETWORK_DIR = 'etc/systemd/network'
     SERVICE_DIR = 'usr/lib/systemd/system'

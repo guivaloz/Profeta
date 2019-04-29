@@ -17,7 +17,7 @@ class EquiposService(Equipos):
         contenido.append("After=network.target")
         contenido.append("")
         contenido.append("[Service]")
-        contenido.append("ExecStart=/usr/sbin/dnsmasq -k --bind-interfaces --listen-address={0}.{1}.1 --conf-file=/var/lib/dnsmasq/vlan{1}/dnsmasq.conf --pid-file=/var/lib/dnsmasqvlan{1}.pid".format(self.IP_ADDRESS_PREFIX, self.vlan))
+        contenido.append("ExecStart=/usr/sbin/dnsmasq -k --bind-interfaces --listen-address={0}.{1}.{2} --conf-file=/var/lib/dnsmasq/vlan{1}/dnsmasq.conf --pid-file=/var/lib/dnsmasqvlan{1}.pid".format(self.IP_ADDRESS_PREFIX, self.vlan, self.IP_ADDRESS_PROFETA_N))
         contenido.append("ExecReload=/bin/kill -HUP $MAINPID")
         contenido.append("Restart=on-failure")
         contenido.append("RestartSec=5")
