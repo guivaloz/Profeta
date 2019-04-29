@@ -1,6 +1,13 @@
 import click
-from dnsmasqconf.equipos_dnsmasqconf import EquiposDnsmasqconf
-from hosts.equipos_hosts import EquiposHosts
+import os
+
+from equipos.equipos import Equipos
+from equipos.equipos_dnsmasqconf import EquiposDnsmasqconf
+from equipos.equipos_hosts import EquiposHosts
+from equipos.equipos_netdev import EquiposNetdev
+from equipos.equipos_network import EquiposNetwork
+from equipos.equipos_service import EquiposService
+from equipos.guardar_todo import GuardarTodo
 
 
 class Config(object):
@@ -34,16 +41,29 @@ def cli(config, salvar, entrada, vlan, salida):
 
 @cli.command()
 @pass_config
+def equipos(config):
+    """
+    Mostrar equipos
+    """
+    equipos = Equipos(config.salvar, config.entrada, config.vlan, config.salida)
+    try:
+        click.echo(equipos)
+    except Exception as e:
+        click.echo(e)
+
+
+@cli.command()
+@pass_config
 def dnsmasqconf(config):
     """
-    Elaborar archivo dnsmasq.conf
+    Elaborar /var/lib/dnsmasq/vlanNN/dnsmasq.conf
     """
     equipos = EquiposDnsmasqconf(config.salvar, config.entrada, config.vlan, config.salida)
     try:
         if config.salvar:
             click.echo(equipos.guardar())
         else:
-            click.echo(equipos.crear())
+            click.echo(equipos)
     except Exception as e:
         click.echo(e)
 
@@ -52,13 +72,78 @@ def dnsmasqconf(config):
 @pass_config
 def hosts(config):
     """
-    Elaborar archivo hosts
+    Elaborar /var/lib/dnsmasq/vlanNN/hosts
     """
     equipos = EquiposHosts(config.salvar, config.entrada, config.vlan, config.salida)
     try:
         if config.salvar:
             click.echo(equipos.guardar())
         else:
-            click.echo(equipos.crear())
+            click.echo(equipos)
     except Exception as e:
         click.echo(e)
+
+
+@cli.command()
+@pass_config
+def netdev(config):
+    """
+    Elaborar /etc/systemd/network/enp1s0.NN.netdev
+    """
+    equipos = EquiposNetdev(config.salvar, config.entrada, config.vlan, config.salida)
+    try:
+        if config.salvar:
+            click.echo(equipos.guardar())
+        else:
+            click.echo(equipos)
+    except Exception as e:
+        click.echo(e)
+
+
+@cli.command()
+@pass_config
+def network(config):
+    """
+    Elaborar /etc/systemd/network/enp1s0.NN.network
+    """
+    equipos = EquiposNetwork(config.salvar, config.entrada, config.vlan, config.salida)
+    try:
+        if config.salvar:
+            click.echo(equipos.guardar())
+        else:
+            click.echo(equipos)
+    except Exception as e:
+        click.echo(e)
+
+
+@cli.command()
+@pass_config
+def service(config):
+    """
+    Elaborar /usr/lib/systemd/system/dnsmasqvlanNN.service
+    """
+    equipos = EquiposService(config.salvar, config.entrada, config.vlan, config.salida)
+    try:
+        if config.salvar:
+            click.echo(equipos.guardar())
+        else:
+            click.echo(equipos)
+    except Exception as e:
+        click.echo(e)
+
+
+@cli.command()
+@pass_config
+def guardar_todo(config):
+    """
+    Guardar todas las configuraciones
+    """
+    guardar_todo = GuardarTodo(config.salvar, config.entrada)
+    try:
+        if config.salvar:
+            click.echo(guardar_todo.guardar())
+        else:
+            click.echo(guardar_todo)
+    except Exception as e:
+        click.echo(e)
+

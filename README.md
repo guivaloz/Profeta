@@ -16,25 +16,40 @@ Clone este repositorio de GitHub...
     (Profeta) $ git clone https://github.com/guivaloz/Profeta.git
     (Profeta) $ cd Profeta
 
-Instale los requerimientos y el comando [click](https://click.palletsprojects.com/en/7.x/) 'profeta'...
+Instale los requerimientos y el comando 'profeta'...
 
     (Profeta) $ pip install -r requirements.txt
     (Profeta) $ pip install --editable .
 
+### Insumo
+
+Requiere un archivo CVS de 'entrada' con las siguientes columnas
+
+    vlans,departamentos,nombres,dispositivos,macaddress,ips,puertos
+
 ### Uso
 
-Consulte la ayuda integrada...
+Consultar la ayuda integrada...
 
     (Profeta) $ profeta --help
-    Usage: profeta [OPTIONS] COMMAND [ARGS]...
 
-    Options:
-      --salvar        Habilita el modo de salvar
-      --entrada TEXT  Archivo CSV con insumos
-      --vlan TEXT     Filtro por VLAN número
-      --salida TEXT   Nombre del archivo a escribir
-      --help          Show this message and exit.
+Mostrar tabla de datos del archivo CSV...
 
-    Commands:
-      dnsmasqconf  Elaborar archivo dnsmasq.conf
-      hosts        Elaborar archivo hosts
+    (Profeta) $ profeta --entrada direcciones-ip.csv equipos
+
+Mostrar tabla de datos del archivo CSV, filtrando por VLAN 13...
+
+    (Profeta) $ profeta --entrada direcciones-ip.csv --vlan 13 equipos
+
+Mostrar información básica para cada configuración
+
+    (Profeta) $ profeta --entrada direcciones-ip.csv hosts
+    (Profeta) $ profeta --entrada direcciones-ip.csv dnsmasqconf
+
+Mostrar contenido de `hosts` de la VLAN 13
+
+    (Profeta) $ profeta --entrada direcciones-ip.csv --vlan 13 hosts
+
+Mostrar contenido de `dnsmasq.conf` de la VLAN 13
+
+    (Profeta) $ profeta --entrada direcciones-ip.csv --vlan 13 dnsmasqconf

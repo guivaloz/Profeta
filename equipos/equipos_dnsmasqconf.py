@@ -2,13 +2,13 @@ from equipos.equipos import Equipos
 
 
 class EquiposDnsmasqconf(Equipos):
-    """ Equipos dnsmasq.conf """
+    """ Equipos /var/lib/dnsmasq/vlanNN/dnsmasq.conf """
 
     def crear(self):
         if self.cargado == False:
             self.cargar()
         if self.cantidad == 0:
-            raise Exception('<Error> La consulta no arrojó equipos.')
+            raise Exception('<EquiposDnsmasqconf> Aviso: La consulta no arrojó equipos.')
         contenido = list()
         if self.vlan != '':
             contenido.append("#")
@@ -19,10 +19,10 @@ class EquiposDnsmasqconf(Equipos):
             contenido.append("addn-hosts=/var/lib/dnsmasq/vlan{0}/hosts".format(self.vlan))
             contenido.append("")
             contenido.append("# Listen only on the device with this IP address")
-            contenido.append("listen-address=192.168.{0}.1".format(self.vlan))
+            contenido.append("listen-address={0}.{1}.{2}".format(self.IP_ADDRESS_PREFIX, self.vlan, self.IP_ADDRESS_PROFETA_N))
             contenido.append("")
             contenido.append("# IP address range for unkown hosts")
-            contenido.append("dhcp-range=192.168.{0}.101,192.168.{0}.199,1h".format(self.vlan))
+            contenido.append("dhcp-range={0}.{1}.101,{0}.{1}.199,1h".format(self.IP_ADDRESS_PREFIX, self.vlan))
             contenido.append("")
         contenido.append("# Fixed IP address")
         for equipo in self.equipos:
@@ -52,8 +52,3 @@ class EquiposDnsmasqconf(Equipos):
         contenido.append("")
         return('\n'.join(contenido))
 
-    def guardar(self):
-        salida = self.crear()
-        with open(self.salida, 'w') as file:
-            file.write(salida)
-            return('He escrito el archivo de configuración {0}'.format(self.salida))
