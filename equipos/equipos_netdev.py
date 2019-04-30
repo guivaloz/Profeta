@@ -13,7 +13,7 @@ class EquiposNetdev(Equipos):
             raise Exception('<EquiposNetdev> Aviso: Falta la VLAN.')
         contenido = list()
         contenido.append("[NetDev]")
-        contenido.append("Name={}".format(self.NETWORK_DEVICE))
+        contenido.append("Name={0}.{1}".format(self.NETWORK_DEVICE, self.vlan))
         contenido.append("Kind=vlan")
         contenido.append("")
         contenido.append("[VLAN]")
