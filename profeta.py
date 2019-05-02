@@ -23,8 +23,8 @@ pass_config = click.make_pass_decorator(Config, ensure=True)
 
 
 @click.group()
-@click.option('--salvar', is_flag=True, help='Habilita el modo de salvar')
-@click.option('--entrada', default='direcciones-ip.csv', type=str, help='Archivo CSV con insumos')
+@click.option('--salvar', is_flag=True, help='Habilita el modo de salvar o guardar')
+@click.option('--entrada', default='direcciones-ip.csv', type=str, help='Nombre del archivo CSV a cargar')
 @click.option('--vlan', default='', type=str, help='Filtro por VLAN número')
 @click.option('--salida', default='', type=str, help='Nombre del archivo a escribir')
 @pass_config
@@ -146,4 +146,3 @@ def guardar_todo(config):
             click.echo(guardar_todo)
     except Exception as e:
         click.echo(e)
-

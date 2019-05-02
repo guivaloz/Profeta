@@ -60,5 +60,4 @@ class Equipo(object):
             ])
 
     def __repr__(self):
-        return("Equipo {}".format(self.nombre))
-
+        return("<Equipo {}>".format(self.nombre))

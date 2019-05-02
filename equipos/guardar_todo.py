@@ -23,7 +23,7 @@ class GuardarTodo(object):
         self.entrada = entrada
 
     def guardar(self):
-        mensajes = list()
+        m = list()
         for vlan in self.VLANS:
             #
             # hosts
@@ -33,12 +33,12 @@ class GuardarTodo(object):
             salida = '{0}/hosts'.format(directorio)
             equipos_hosts = EquiposHosts(self.salvar, self.entrada, vlan, salida)
             equipos_hosts.guardar()
-            mensajes.append("He escrito {0}".format(salida))
+            m.append("He escrito {0}".format(salida))
             # dnsmasq.conf
             salida = '{0}/dnsmasq.conf'.format(directorio)
             equipos_hosts = EquiposDnsmasqconf(self.salvar, self.entrada, vlan, salida)
             equipos_hosts.guardar()
-            mensajes.append("He escrito {0}".format(salida))
+            m.append("He escrito {0}".format(salida))
             #
             # netdev
             if not os.path.exists(self.NETWORK_DIR):
@@ -46,12 +46,12 @@ class GuardarTodo(object):
             salida = '{0}/{1}.{2}.netdev'.format(self.NETWORK_DIR, self.NETWORK_DEVICE, vlan)
             equipos_netdev = EquiposNetdev(self.salvar, self.entrada, vlan, salida)
             equipos_netdev.guardar()
-            mensajes.append("He escrito {0}".format(salida))
+            m.append("He escrito {0}".format(salida))
             # network
             salida = '{0}/{1}.{2}.network'.format(self.NETWORK_DIR, self.NETWORK_DEVICE, vlan)
             equipos_network = EquiposNetwork(self.salvar, self.entrada, vlan, salida)
             equipos_network.guardar()
-            mensajes.append("He escrito {0}".format(salida))
+            m.append("He escrito {0}".format(salida))
             #
             # service
             if not os.path.exists(self.SERVICE_DIR):
@@ -59,26 +59,25 @@ class GuardarTodo(object):
             salida = '{0}/dnsmasqvlan{1}.service'.format(self.SERVICE_DIR, vlan)
             equipos_service = EquiposService(self.salvar, self.entrada, vlan, salida)
             equipos_service.guardar()
-            mensajes.append("He escrito {0}".format(salida))
-        return("\n".join(mensajes))
+            m.append("He escrito {0}".format(salida))
+        return("\n".join(m))
 
     def __repr__(self):
-        mensajes = list()
+        m = list()
         for vlan in self.VLANS:
             equipos_hosts = EquiposHosts(self.salvar, self.entrada, vlan, 'hosts')
-            mensajes.append(str(equipos_hosts))
-            mensajes.append('-' * 80)
+            m.append(str(equipos_hosts))
+            m.append('-' * 80)
             equipos_dnsmasqconf = EquiposDnsmasqconf(self.salvar, self.entrada, vlan, 'dnsmasq.conf')
-            mensajes.append(str(equipos_dnsmasqconf))
-            mensajes.append('-' * 80)
+            m.append(str(equipos_dnsmasqconf))
+            m.append('-' * 80)
             equipos_netdev = EquiposNetdev(self.salvar, self.entrada, vlan, '.netdev')
-            mensajes.append(str(equipos_netdev))
-            mensajes.append('-' * 80)
+            m.append(str(equipos_netdev))
+            m.append('-' * 80)
             equipos_network = EquiposNetwork(self.salvar, self.entrada, vlan, '.network')
-            mensajes.append(str(equipos_network))
-            mensajes.append('-' * 80)
+            m.append(str(equipos_network))
+            m.append('-' * 80)
             equipos_service = EquiposService(self.salvar, self.entrada, vlan, '.service')
-            mensajes.append(str(equipos_service))
-            mensajes.append('=' * 80)
-        return("\n".join(mensajes))
-
+            m.append(str(equipos_service))
+            m.append('=' * 80)
+        return("\n".join(m))

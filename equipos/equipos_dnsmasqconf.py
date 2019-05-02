@@ -9,25 +9,25 @@ class EquiposDnsmasqconf(Equipos):
             self.cargar()
         if self.cantidad == 0:
             raise Exception('<EquiposDnsmasqconf> Aviso: La consulta no arrojó equipos.')
-        contenido = list()
+        a = list()
         if self.vlan != '':
-            contenido.append("#")
-            contenido.append("# /var/lib/dnsmasq/vlan{0}/dnsmasq.conf".format(self.vlan))
-            contenido.append("#")
-            contenido.append("")
-            contenido.append("# Hosts files of the VLAN")
-            contenido.append("addn-hosts=/var/lib/dnsmasq/vlan{0}/hosts".format(self.vlan))
-            contenido.append("")
-            contenido.append("# Listen only on the device with this IP address")
-            contenido.append("listen-address={0}.{1}.{2}".format(self.IP_ADDRESS_PREFIX, self.vlan, self.IP_ADDRESS_PROFETA_N))
-            contenido.append("")
-            contenido.append("# IP address range for unkown hosts")
-            contenido.append("dhcp-range={0}.{1}.101,{0}.{1}.199,1h".format(self.IP_ADDRESS_PREFIX, self.vlan))
-            contenido.append("")
-        contenido.append("# Fixed IP address")
+            a.append("#")
+            a.append("# /var/lib/dnsmasq/vlan{0}/dnsmasq.conf".format(self.vlan))
+            a.append("#")
+            a.append("")
+            a.append("# Hosts files of the VLAN")
+            a.append("addn-hosts=/var/lib/dnsmasq/vlan{0}/hosts".format(self.vlan))
+            a.append("")
+            a.append("# Listen only on the device with this IP address")
+            a.append("listen-address={0}.{1}.{2}".format(self.IP_ADDRESS_PREFIX, self.vlan, self.IP_ADDRESS_PROFETA_N))
+            a.append("")
+            a.append("# IP address range for unkown hosts")
+            a.append("dhcp-range={0}.{1}.101,{0}.{1}.199,1h".format(self.IP_ADDRESS_PREFIX, self.vlan))
+            a.append("")
+        a.append("# Fixed IP address")
         for equipo in self.equipos:
             if self.vlan == '':
-                contenido.append("# vlan{0} -> {1}, {2}, {3}, {4}".format(
+                a.append("# vlan{0} -> {1}, {2}, {3}, {4}".format(
                     equipo.vlan,
                     equipo.macaddress,
                     equipo.ip,
@@ -35,20 +35,19 @@ class EquiposDnsmasqconf(Equipos):
                     equipo.dispositivo,
                     ))
             elif equipo.vlan == self.vlan:
-                contenido.append("dhcp-host={0},{1}  # {2}: {3}".format(
+                a.append("dhcp-host={0},{1}  # {2}: {3}".format(
                     equipo.macaddress,
                     equipo.ip,
                     equipo.nombre,
                     equipo.dispositivo,
                     ))
-        contenido.append("")
+        a.append("")
         if self.vlan != '':
-            contenido.append("# Lease file")
-            contenido.append("dhcp-leasefile=/var/lib/dnsmasq/vlan{0}/dnsmasq.leases".format(self.vlan))
-            contenido.append("")
-            contenido.append("# Include all files in /etc/dnsmasq.d except RPM backup files")
-            contenido.append("conf-dir=/etc/dnsmasq.d,.rpmnew,.rpmsave,.rpmorig")
-            contenido.append("")
-        contenido.append("")
-        return('\n'.join(contenido))
-
+            a.append("# Lease file")
+            a.append("dhcp-leasefile=/var/lib/dnsmasq/vlan{0}/dnsmasq.leases".format(self.vlan))
+            a.append("")
+            a.append("# Include all files in /etc/dnsmasq.d except RPM backup files")
+            a.append("conf-dir=/etc/dnsmasq.d,.rpmnew,.rpmsave,.rpmorig")
+            a.append("")
+        a.append("")
+        return('\n'.join(a))
