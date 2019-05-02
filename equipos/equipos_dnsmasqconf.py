@@ -4,6 +4,8 @@ from equipos.equipos import Equipos
 class EquiposDnsmasqconf(Equipos):
     """ Equipos /var/lib/dnsmasq/vlanNN/dnsmasq.conf """
 
+    PROXY_SERVER = 'proxy.sesaec.lan'
+
     def crear(self):
         if self.cargado == False:
             self.cargar()
@@ -45,6 +47,11 @@ class EquiposDnsmasqconf(Equipos):
         if self.vlan != '':
             a.append("# Lease file")
             a.append("dhcp-leasefile=/var/lib/dnsmasq/vlan{0}/dnsmasq.leases".format(self.vlan))
+            a.append("")
+            a.append("# URL del script de configuración automática de proxy en el navegador")
+            a.append("dhcp-option=252,http://{0}/proxy.pac".format(self.PROXY_SERVER))
+            a.append("# En cambio, para Windows, cuando no se tiene, se envía un avance de línea")
+            a.append('#dhcp-option=252,"\\n"')
             a.append("")
             a.append("# Include all files in /etc/dnsmasq.d except RPM backup files")
             a.append("conf-dir=/etc/dnsmasq.d,.rpmnew,.rpmsave,.rpmorig")
