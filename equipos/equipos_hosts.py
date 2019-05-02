@@ -18,7 +18,7 @@ class EquiposHosts(Equipos):
         for equipo in self.equipos:
             mayusculas = ''.join([c for c in equipo.nombre if c.isupper()])
             if mayusculas == '':
-                raise Exception('<Error> Las siglas se toman a partir de las mayúsculas, {} no las tiene.'.format(equipo.nombre))
+                raise Exception('<EquiposHosts> Las siglas se toman a partir de las mayúsculas, {} no las tiene.'.format(equipo.nombre))
             if self.vlan == '':
                 a.append("# vlan{0}: {1} {2} -> {3}, {4}".format(
                     equipo.vlan,
