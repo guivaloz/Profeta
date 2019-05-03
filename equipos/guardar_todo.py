@@ -2,6 +2,8 @@ import os
 
 from equipos.equipos_dnsmasqconf import EquiposDnsmasqconf
 from equipos.equipos_hosts import EquiposHosts
+from equipos.equipos_lightsquidgroup import EquiposLightSquidGroup
+from equipos.equipos_lightsquidrealname import EquiposLightSquidRealname
 from equipos.equipos_netdev import EquiposNetdev
 from equipos.equipos_network import EquiposNetwork
 from equipos.equipos_service import EquiposService

@@ -4,9 +4,12 @@ import os
 from equipos.equipos import Equipos
 from equipos.equipos_dnsmasqconf import EquiposDnsmasqconf
 from equipos.equipos_hosts import EquiposHosts
+from equipos.equipos_lightsquidgroup import EquiposLightSquidGroup
+from equipos.equipos_lightsquidrealname import EquiposLightSquidRealname
 from equipos.equipos_netdev import EquiposNetdev
 from equipos.equipos_network import EquiposNetwork
 from equipos.equipos_service import EquiposService
+
 from equipos.guardar_todo import GuardarTodo
 
 
@@ -75,6 +78,38 @@ def hosts(config):
     Elaborar /var/lib/dnsmasq/vlanNN/hosts
     """
     equipos = EquiposHosts(config.salvar, config.entrada, config.vlan, config.salida)
+    try:
+        if config.salvar:
+            click.echo(equipos.guardar())
+        else:
+            click.echo(equipos)
+    except Exception as e:
+        click.echo(e)
+
+
+@cli.command()
+@pass_config
+def lightsquidgroup(config):
+    """
+    Elaborar /etc/lightsquid/group.cfg
+    """
+    equipos = EquiposLightSquidGroup(config.salvar, config.entrada, config.vlan, config.salida)
+    try:
+        if config.salvar:
+            click.echo(equipos.guardar())
+        else:
+            click.echo(equipos)
+    except Exception as e:
+        click.echo(e)
+
+
+@cli.command()
+@pass_config
+def lightsquidrealname(config):
+    """
+    Elaborar /etc/lightsquid/realname.cfg
+    """
+    equipos = EquiposLightSquidRealname(config.salvar, config.entrada, config.vlan, config.salida)
     try:
         if config.salvar:
             click.echo(equipos.guardar())

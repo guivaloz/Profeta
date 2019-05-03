@@ -17,7 +17,7 @@ class EquiposLightSquidGroup(Equipos):
                 sec = secuencias[equipo.departamento]
             else:
                 numero += 1
-                sec = numero.zfill(2)
+                sec = str(numero).zfill(2)
                 secuencias[equipo.departamento] = sec
             # Direccion IP
             # Secuencia
