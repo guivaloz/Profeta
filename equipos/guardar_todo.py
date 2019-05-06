@@ -19,6 +19,7 @@ class GuardarTodo(object):
     DNSMASQCONF_DIR = 'var/lib/dnsmasq'
     NETWORK_DIR = 'etc/systemd/network'
     SERVICE_DIR = 'usr/lib/systemd/system'
+    LIGHTSQUID_DIR = 'etc/lightsquid'
 
     def __init__(self, salvar, entrada):
         self.salvar = salvar
@@ -36,6 +37,7 @@ class GuardarTodo(object):
             equipos_hosts = EquiposHosts(self.salvar, self.entrada, vlan, salida)
             equipos_hosts.guardar()
             m.append("He escrito {0}".format(salida))
+            #
             # dnsmasq.conf
             salida = '{0}/dnsmasq.conf'.format(directorio)
             equipos_hosts = EquiposDnsmasqconf(self.salvar, self.entrada, vlan, salida)
@@ -49,6 +51,7 @@ class GuardarTodo(object):
             equipos_netdev = EquiposNetdev(self.salvar, self.entrada, vlan, salida)
             equipos_netdev.guardar()
             m.append("He escrito {0}".format(salida))
+            #
             # network
             salida = '{0}/{1}.{2}.network'.format(self.NETWORK_DIR, self.NETWORK_DEVICE, vlan)
             equipos_network = EquiposNetwork(self.salvar, self.entrada, vlan, salida)
@@ -62,6 +65,20 @@ class GuardarTodo(object):
             equipos_service = EquiposService(self.salvar, self.entrada, vlan, salida)
             equipos_service.guardar()
             m.append("He escrito {0}".format(salida))
+        #
+        # lightsquid group
+        if not os.path.exists(self.LIGHTSQUID_DIR):
+            os.makedirs(self.LIGHTSQUID_DIR)
+        salida = '{0}/group.cfg'.format(self.LIGHTSQUID_DIR)
+        equipos_lightsquidgroup = EquiposLightSquidGroup(self.salvar, self.entrada, '', salida)
+        equipos_lightsquidgroup.guardar()
+        m.append("He escrito {0}".format(salida))
+        #
+        # lightsquid realname
+        salida = '{0}/realname.cfg'.format(self.LIGHTSQUID_DIR)
+        equipos_lightsquidrealname = EquiposLightSquidRealname(self.salvar, self.entrada, '', salida)
+        equipos_lightsquidrealname.guardar()
+        m.append("He escrito {0}".format(salida))
         return("\n".join(m))
 
     def __repr__(self):
@@ -82,4 +99,9 @@ class GuardarTodo(object):
             equipos_service = EquiposService(self.salvar, self.entrada, vlan, '.service')
             m.append(str(equipos_service))
             m.append('=' * 80)
+        equipos_lightsquidgroup = EquiposLightSquidGroup(self.salvar, self.entrada, '', 'group.cfg')
+        m.append(str(equipos_lightsquidgroup))
+        m.append('-' * 80)
+        equipos_lightsquidrealname = EquiposLightSquidRealname(self.salvar, self.entrada, '', 'realname.cfg')
+        m.append(str(equipos_lightsquidrealname))
         return("\n".join(m))

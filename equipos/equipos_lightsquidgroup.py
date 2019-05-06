@@ -19,9 +19,6 @@ class EquiposLightSquidGroup(Equipos):
                 numero += 1
                 sec = str(numero).zfill(2)
                 secuencias[equipo.departamento] = sec
-            # Direccion IP
-            # Secuencia
-            # Departamento
             a.append("{0}\t{1}\t{2}".format(equipo.ip, sec, equipo.departamento))
         a.append("")
         a.append("")
