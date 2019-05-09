@@ -44,7 +44,11 @@ class Equipo(object):
             return(False)
         if self.ip == '':
             return(False)
-        if not str.isdigit(self.puerto):
+        if isinstance(self.puerto, str):
+            self.puerto = {int(n) for n in self.puerto.split(', ') if str.isdigit(n)}
+            if bool(self.puerto) == False:
+                return(False)
+        elif not isinstance(self.puerto, set):
             return(False)
         return(True)
 
