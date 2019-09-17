@@ -19,7 +19,7 @@ class EquiposNetwork(Equipos):
         a.append("DHCP=no")
         a.append("")
         a.append("[Address]")
-        a.append("Address={0}.{1}.{2}/24".format(self.IP_ADDRESS_PREFIX, self.vlan, self.IP_ADDRESS_PROFETA_N))
+        a.append("Address={0}/24".format(self.obtener_profeta_ip_address()))
         a.append("")
         a.append("")
         return('\n'.join(a))

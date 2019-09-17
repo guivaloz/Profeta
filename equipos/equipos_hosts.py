@@ -14,7 +14,7 @@ class EquiposHosts(Equipos):
             a.append("#")
             a.append("# /var/lib/dnsmasq/vlan{0}/hosts".format(self.vlan))
             a.append("#")
-            a.append("{0}.{1}.{2} {3}".format(self.IP_ADDRESS_PREFIX, self.vlan, self.IP_ADDRESS_PROFETA_N, 'wpad proxy profeta'))
+            a.append("{0} {1}".format(self.obtener_profeta_ip_address(), 'wpad proxy profeta'))
         for equipo in self.equipos:
             mayusculas = ''.join([c for c in equipo.nombre if c.isupper()])
             if mayusculas == '':

@@ -23,6 +23,12 @@ class Equipos(object):
         self.equipos = None
         self.cantidad = 0
 
+    def obtener_profeta_ip_address(self):
+        if str.isdigit(self.vlan):
+            return(f'{self.IP_ADDRESS_PREFIX}.{self.vlan}.{self.IP_ADDRESS_PROFETA_N}')
+        else:
+            raise Exception('<Equipos> Aviso: Falta la VLAN.')
+
     def cargar(self):
         if not os.path.isfile(self.entrada):
             raise Exception("<Error> Archivo CSV {} no encontrado.".format(self.entrada))
